@@ -1,0 +1,100 @@
+/* You can add global styles to this file, and also import other style files */
+$theme-colors :("primary": #EC063B, "secondary": #413BD3, "success": #00b34d, "danger": #EC063B, "info": #a2d5f2, "dark": #EC063B, "light": #F2F2F2);
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import url('https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css');
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+
+body {
+    background: #F9f9f9;
+    font-family: 'Poppins', sans-serif;
+    color: #292929 !important;
+    font-size: 13px !important;
+    // overflow-x: hidden;
+}
+
+*:focus {
+    outline: none;
+}
+
+i {
+    vertical-align: middle;
+}
+
+.br-6 {
+    border-radius: 6px;
+}
+
+.br-10 {
+    border-radius: 10px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+
+input.ng-touched.ng-invalid:not(form) {
+    border: 1px solid var(--danger);
+    /* red */
+}
+
+select.ng-touched.ng-invalid:not(form) {
+    border: 1px solid var(--danger);
+    /* red */
+}
+
+textarea.ng-touched.ng-invalid:not(form) {
+    border: 1px solid var(--danger);
+    /* red */
+}
+
+.ng-select.ng-touched.ng-invalid:not(form) {
+    border: 1px solid var(--danger) !important;
+}
+
+.card table thead tr th {
+    background: #FFD3D3 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    padding: 8px 0.3rem !important;
+    // min-width: 110px !important;
+}
+
+.card .table .thead-dark th {
+    border: 0 !important;
+}
+
+.card table tr td {
+    vertical-align: middle !important;
+}
+
+.custom-select {
+    font-size: 12px;
+}
+
+.label {
+    font-weight: 500;
+}
+
+.text-black {
+    color: #000;
+}
+
+b {
+    font-weight: normal !important;
+}
+
+.bg-c .modal-content{border: 0;box-shadow: 0px 2px 3px rgb(162, 162, 199);}
+
+header li:hover{cursor: pointer;}
+
+.card{
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+}
+
+table td{font-weight: 100 !important;}

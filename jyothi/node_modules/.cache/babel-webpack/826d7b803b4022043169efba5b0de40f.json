@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { OwlDialogModule } from './dialog.module';\nexport { OwlDialogService } from './dialog.service';\nexport { OwlDialogRef } from './dialog-ref.class';","map":null,"metadata":{},"sourceType":"module"}

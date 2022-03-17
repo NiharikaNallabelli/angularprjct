@@ -1,0 +1,367 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="menutabs mt-4 pr-0" orientation="vertical">
+                <li ngbNavItem="1">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2" (click)="optionSelection('hotel')"
+                            [ngClass]="selectedOption == 'hotel'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Departments</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 sahdow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <h5 class="m-0"><b>Departments</b></h5>
+                                    <button (click)="addDepartment(departments, 'add', null)" placement="top"
+                                        ngbTooltip="Add Department" class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+                                <div class="table-responsive mt-2">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Department Name</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of departmentsData; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.department_name}}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input [checked]="item.status == 'Active' "
+                                                            (input)="changeStatus(item, 'departments')" type="checkbox"
+                                                            class="custom-control-input" id="switch1{{i}}">
+                                                        <label class="custom-control-label" for="switch1{{i}}"></label>
+                                                    </div>
+
+                                                </td>
+                                                <td><i (click)="addDepartment(departments, 'edit', item)"
+                                                        placement="top" ngbTooltip="Edit" class="ri-pencil-line"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+                <li ngbNavItem="2">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2" (click)="optionSelection('vendors')"
+                            [ngClass]="selectedOption == 'vendors'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Designation</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center">
+                                    <h5 class="m-0"><b>Designation</b></h5>
+                                    <button (click)="addRole(role, 'add', null)" placement="top"
+                                        ngbTooltip="Add Designation" class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+
+                                <div class="table-responsive mt-2">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Designation</th>
+
+
+
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of designations; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.designation_name}}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input [checked]="item.status == 'Active' "
+                                                            (input)="changeStatus(item, 'designations')" type="checkbox"
+                                                            class="custom-control-input" id="switch1{{i}}">
+                                                        <label class="custom-control-label" for="switch1{{i}}"></label>
+                                                    </div>
+
+                                                </td>
+                                                <td><i (click)="addRole(role, 'edit', item)" placement="top"
+                                                        ngbTooltip="Edit" class="ri-pencil-line"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+                <li ngbNavItem="3">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2" (click)="optionSelection('types')"
+                            [ngClass]="selectedOption == 'types'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Document Types</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center">
+                                    <h5 class="m-0"><b>Document Types</b></h5>
+                                    <button (click)="addDocumnet(documnet, 'add', null)" placement="top" ngbTooltip="Add Document Types"
+                                        class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+
+                                <div class="table-responsive mt-2">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Document Name</th>
+
+
+
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of doctypes; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.document_name}}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input [checked]="item.status == 'Active' "
+                                                            (input)="changeStatus(item, 'docTypes')" type="checkbox"
+                                                            class="custom-control-input" id="switch1{{i}}">
+                                                        <label class="custom-control-label" for="switch1{{i}}"></label>
+                                                    </div>
+
+                                                </td>
+                                                <td><i (click)="addDocumnet(documnet, 'edit', item)" placement="top"
+                                                        ngbTooltip="Edit" class="ri-pencil-line"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+
+                <li ngbNavItem="4">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2" (click)="optionSelection('contractTypes')"
+                            [ngClass]="selectedOption == 'contractTypes'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Contract Types</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center">
+                                    <h5 class="m-0"><b>Contract Type</b></h5>
+                                    <button (click)="addContract(contract, 'add', null)" placement="top" ngbTooltip="Add Contract"
+                                        class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+
+                                <div class="table-responsive mt-2">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Contract Type</th>
+
+
+
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of contracts; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.contract_name}}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input [checked]="item.status == 'Active' "
+                                                            (input)="changeStatus(item, 'contracts')" type="checkbox"
+                                                            class="custom-control-input" id="switch1{{i}}">
+                                                        <label class="custom-control-label" for="switch1{{i}}"></label>
+                                                    </div>
+
+                                                </td>
+                                                <td><i (click)="addContract(contract, 'edit', item)" placement="top"
+                                                        ngbTooltip="Edit" class="ri-pencil-line"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+            </ul>
+
+        </div>
+        <div class="col-md-9 pl-0">
+            <div [ngbNavOutlet]="nav" class="mt-4"></div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<ng-template #departments let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachDepartment ? 'Update' : 'Add'}} Department</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #departmentForm="ngForm" (ngSubmit)="onSubmit(departmentForm)">
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="department_name">Department Name</label>
+                <input required #department_name="ngModel" [(ngModel)]="departmentFormData.department_name"
+                    id="department_name" class="form-control" type="text" name="department_name">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachDepartment ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #role let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachDesignation ? 'Update' : 'Add'}} Designation</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #designationForm="ngForm" (ngSubmit)="designationSubmit(designationForm)">
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="designation_name">Designation</label>
+                <input required #designation_name="ngModel" [(ngModel)]="designationFormData.designation_name"
+                    id="designation_name" class="form-control" type="text" name="designation_name">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachDesignation ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #documnet let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachDocument ? 'Update' : 'Add'}} Document</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #doctypeForm="ngForm" (ngSubmit)="doctypeSubmit(doctypeForm)">
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="document_name">Doctype</label>
+                <input required #document_name="ngModel" [(ngModel)]="doctypeFormData.document_name"
+                    id="document_name" class="form-control" type="text" name="document_name">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachDocument ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</ng-template>
+
+
+
+<ng-template #contract let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachContract ? 'Update' : 'Add'}} Contract</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #contractForm="ngForm" (ngSubmit)="contractSubmit(contractForm)">
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="contract_name">Contract Type</label>
+                <input required #contract_name="ngModel" [(ngModel)]="contractFormData.contract_name"
+                    id="contract_name" class="form-control" type="text" name="contract_name">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachContract ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</ng-template>

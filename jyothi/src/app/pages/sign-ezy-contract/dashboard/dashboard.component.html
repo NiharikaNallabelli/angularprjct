@@ -1,0 +1,101 @@
+<div class="container-fluid my-4">
+    <div class="row">
+
+        <div class="col">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{dasboardData?.total_counts || 0}}</h5>
+                    <p class="card-text">Total Contracts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pl-0">
+            <div class="card  border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{dasboardData?.active_counts || 0}}</h5>
+                    <p class="card-text">Active Contracts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pl-0">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{dasboardData?.expaired_counts || 0}}</h5>
+                    <p class="card-text">Expired Contracts</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pl-0">
+            <div class="card  border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{dasboardData?.vendor_count || 0}}</h5>
+                    <p class="card-text">Vendors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col pl-0">
+            <div class="card  border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Rs.{{dasboardData?.total_amount || 0}}</h5>
+                    <p class="card-text">Total amount spent</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-7 pr-0">
+            <div class="card vh-80 border-0 shadow-sm">
+                <div class="card-body">
+                    <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="single" 
+                        [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+                    </ngx-charts-bar-vertical>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-0">
+                   <div class="p-3">
+                    <h6 class="m-0">Contract expiring this month</h6>
+                   </div>
+                   <div>
+                       <table class="table table-bordered m-0">
+                           <thead>
+                               <tr>
+                                   <th>Contract</th>
+                                   <th>Expires on</th>
+                               </tr>
+                           </thead>
+                           <tbody *ngIf="this.dasboardData?.expaired_contracts?.length">
+                               <tr *ngFor="let item of this.dasboardData?.expaired_contracts">
+                                   <td>
+                                      <div class="d-flex">
+                                        <div>
+                                            <img class="img-fluid" src="assets/contract.png" alt="">
+                                        </div>
+                                        <div class="flex-fill">{{item?.contract_name}}</div>
+                                      </div>
+                                   </td>
+                                   <td>
+                                    {{item?.end_date | date}}
+                                   </td>
+                               </tr>
+                               
+                           </tbody>
+                       </table>
+
+                       <div *ngIf="!this.dasboardData?.expaired_contracts?.length">
+                           <div class="py-5 text-center">
+<h6><b>No data</b></h6>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

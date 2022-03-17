@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">{{eachContact ? 'Update' : 'Add'}} Contact</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
+    <div class="modal-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="contact_name"> Name</label>
+                    <input required #contact_name="ngModel" [(ngModel)]="formData.contact_name" id="contact_name"
+                        class="form-control" type="text" name="contact_name">
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="phone_number">Phone Number</label>
+                    <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                        [maxLength]="10" minlength="10" required #phone_number="ngModel"
+                        [(ngModel)]="formData.phone_number" id="phone_number" class="form-control" type="text"
+                        name="phone_number">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required #email="ngModel"
+                        [(ngModel)]="formData.email" id="email" class="form-control" type="text" name="email">
+                    <small *ngIf="email.dirty && email.invalid">Invalid Email</small>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="vendor">Vendor</label>
+                    <select required #vendor="ngModel" [(ngModel)]="formData.vendor" class="form-control" name="vendor">
+                        <option [ngValue]="undefined">Please Select Vendor</option>
+                        <option [value]="item?.name" *ngFor="let item of vendorsData">{{item?.vendor_name}}</option>
+                    </select>
+
+                    <!-- <ng-select name="vendor" required #vendor="ngModel" [(ngModel)]="formData.vendor" [items]="vendorsData" bindLabel="vendor_name" bindValue="name">
+                    </ng-select> -->
+
+                   
+                    
+                </div>
+            </div>
+
+            <!-- <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="my-input">Designation</label>
+                        <select required #designation="ngModel" [(ngModel)]="formData.designation"  class="form-control" name="designation">
+                            <option [ngValue]="undefined" >Please Select Designation</option>
+                            <option [value]="item?.name" *ngFor="let item of designations">{{item?.designation_name}}</option>
+                        </select>
+                    </div>
+                </div> -->
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        <button type="submit" class="btn btn-primary">{{eachContact ? 'Update' : 'Add'}}</button>
+
+    </div>
+
+</form>

@@ -1,0 +1,339 @@
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+
+                <div class="back mt-3">
+                    <h6> <strong> <i [routerLink]="[ '/ezy-contracts/contracts']"
+                                class="ri-arrow-left-line"></i> </strong><strong>Contracts</strong></h6>
+                </div>
+
+                <form #contractForm="ngForm" (ngSubmit)="onSubmit(contractForm)">
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>1. Contract Details</strong></h6>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="contract_name">Contract Title</label>
+                                        <input required #contract_name="ngModel" [(ngModel)]="formData.contract_name" id="contract_name" class="form-control"
+                                            type="text" name="contract_name">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="start_date">Start Date</label>
+                                        <input   required #start_date="ngModel" [(ngModel)]="formData.start_date" id="start_date" class="form-control"
+                                            type="date" name="start_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="end_date">End Date</label> 
+                                        <input [min]="formData.start_date" required #end_date="ngModel" [(ngModel)]="formData.end_date" id="end_date" class="form-control"
+                                        type="date" name="end_date">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contract_type"> Contract Type</label> 
+                                        <ng-select required #contract_type="ngModel" 
+                                        [(ngModel)]="formData.contract_type" 
+                                        name="contract_type"  placeholder="Select Contract" [items]="contractsData" [addTag]="addContract.bind(this)"
+                                        [hideSelected]="true" [multiple]="false"  bindValue="name" bindLabel="contract_name">
+                                    </ng-select>
+
+
+                                    
+                                       
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="my-input"> Department </label>
+                                        <ng-select required #select_department="ngModel" 
+                                        [(ngModel)]="formData.select_department" placeholder="Select Department"
+                                        name="select_department"  [items]="departmentsData" [addTag]="addDepartment.bind(this)"
+                                        [hideSelected]="true" [multiple]="false" bindValue="name" bindLabel="department_name">
+                                    </ng-select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 shadow-sm"  ngModelGroup="name" #personalCtrl="ngModelGroup">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>2. Vendor Details</strong></h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_vendor"> Select Vendor</label>
+                                        <ng-select  required #select_vendor="ngModel" 
+                                        [(ngModel)]="formData.select_vendor"  (change)="vendorChange($event)" placeholder="Select Vendor" name="select_vendor" [searchable]=true>
+                                            <ng-option *ngFor="let item of vendorsData" [value]="item.name">
+                                                {{item.vendor_name}}</ng-option>
+
+                                                <ng-template ng-footer-tmp >
+                                                    <button (click)="addVendor()" class="btn btn-light btn-sm lite-btn shadow-sm" type="button"><i class="ri-add-fill"></i> Add Vendor</button>
+                                                  </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vendor_email_id">Email Id</label>
+                                        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required #vendor_email_id="ngModel" [(ngModel)]="formData.vendor_email_id" id="vendor_email_id" class="form-control"
+                                        type="text" name="vendor_email_id">
+                                        <small *ngIf="vendor_email_id.dirty && vendor_email_id.invalid">Invalid Email</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="vendor_contact_number">Contact Number</label>
+                                        <input maxlength="12"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" required #vendor_contact_number="ngModel" [(ngModel)]="formData.vendor_contact_number" id="vendor_contact_number" class="form-control"
+                                        type="text" name="vendor_contact_number">
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <textarea required #address="ngModel" [(ngModel)]="formData.address" class="form-control" name="address" id="address" rows="3"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="col-md-12">
+                                    <div class="text-right">
+                                        <button id="next" *ngIf="!personalCtrl.invalid" (click)="vendorSave()" class="btn btn-primary" type="button">Next</button>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>3. Contact Info</strong></h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="select_contact"> Select Contact</label>
+                                        <ng-select  required #select_contact="ngModel" [(ngModel)]="formData.select_contact" (change)="contactChange($event)" placeholder="Select Contact" name="select_contact" [searchable]=true>
+                                            <ng-option *ngFor="let item of contactsData" [value]="item.name">
+                                                {{item.contact_name}}</ng-option>
+
+                                                <ng-template ng-footer-tmp >
+                                                    <button (click)="addContact()" class="btn btn-light btn-sm lite-btn shadow-sm" type="button"><i class="ri-add-fill"></i> Add Contact</button>
+                                                  </ng-template>
+
+
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="designation">Designation</label>
+                                        <input required #designation="ngModel" [(ngModel)]="formData.designation" id="designation" class="form-control"
+                                        type="text" name="designation">
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contact_number">Contact Number</label>
+                                        <input maxlength="12"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"  [(ngModel)]="formData.contact_number" #contact_number="ngModel" required id="contact_number" class="form-control" type="text" name="contact_number">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contact_email_id">Email Id</label>
+                                        <input  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [(ngModel)]="formData.contact_email_id" #contact_email_id="ngModel" required id="contact_email_id" class="form-control" type="text" name="contact_email_id">
+                                        <small *ngIf="vendor_email_id.dirty && vendor_email_id.invalid">Invalid Email</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>4. Notification Settings</strong></h6>
+
+                            <div class="row">
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="notification">Notification</label>
+                                        <ng-select required #notification="ngModel" id="notification" [(ngModel)]="formData.notification"  placeholder="Select Notification" name="notification" >
+                                            <ng-option value="Yes">Yes</ng-option>
+                                            <ng-option value="No">No</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" *ngIf="formData.notification === 'Yes'">
+                                    <div class="form-group">
+                                        <label for="send_notification">Send notification before</label>
+                                        <input required #send_notification="ngModel" id="send_notification" [(ngModel)]="formData.send_notification" class="form-control" type="text" name="send_notification">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6" *ngIf="formData.notification === 'Yes'">
+                                    <div class="form-group">
+                                        <label for="my-input"> Select Notification Group</label>
+                                        <ng-select [multiple]="true" required #select_notification_group="ngModel" id="select_notification_group" [(ngModel)]="formData.select_notification_group" placeholder="Select Notification Group" name="select_notification_group"
+                                            [searchable]=true>
+                                            <ng-option *ngFor="let item of usersData" [value]="item.name">
+                                                {{item.name}}</ng-option>
+
+
+
+
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>4. Payment Terms</strong></h6>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="contract_amount">Contract Amount</label>
+                                        <input placeholder="Rs" required #contract_amount="ngModel" id="contract_amount" [(ngModel)]="formData.contract_amount" class="form-control" type="number" name="contract_amount">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="payment_cycle">Payment Cycle</label>
+                                        <ng-select required #payment_cycle="ngModel" id="payment_cycle" [(ngModel)]="formData.payment_cycle"  placeholder="Select Payment Cycle" name="payment_cycle" >
+                                            <ng-option value="Monthly">Monthly</ng-option>
+                                            <ng-option value="Quarterly">Quarterly</ng-option>
+                                            <ng-option value="Half Yearly">Half Yearly</ng-option>
+                                            <ng-option value="Yearly">Yearly</ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="due_date">Due Date</label>
+                                        <input required #due_date="ngModel" id="due_date" [(ngModel)]="formData.due_date" class="form-control" min="1" max="30" type="number" name="due_date">
+                                    </div>
+                                </div>
+
+                               
+
+                                
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>5. Tags</strong></h6>
+
+                            <div class="row">
+
+
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="tags"> Enter Tags</label>
+
+                                        <ng-select required #tags="ngModel" 
+                                        [(ngModel)]="formData.tags" 
+                                        name="tags"  placeholder="Enter Tags" [items]="tagData" [addTag]="addTags.bind(this)"
+                                        [hideSelected]="true" [multiple]="true" bindValue="name" bindLabel="name">
+
+                                      
+                                        </ng-select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="mb-3"><strong>6. Agreement</strong></h6>
+
+                            <div class="row">
+
+
+
+
+                                <div class="col-md-12">
+
+                                    <label for="">Agreement</label>
+
+                                    <div class="custom-file mb-3">
+                                        <input name="agreement" (change)="fileUpload($event)" type="file" class="custom-file-input" id="customFile">
+                                        <label class="custom-file-label" for="customFile">{{this.file ? (this.file[0].agreement | slice : 7) : 'Upload'}}</label>
+                                        <input required [(ngModel)]="formData.agreement" type="hidden" name="agreement">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-12 text-center mb-5">
+                            <button type="button" class="btn btn-outline-dark px-5 py-2 shadow-sm">Cancel</button>
+                            <button type="submit" class="btn btn-primary ml-3 px-5 py-2 shadow-sm">Create</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>

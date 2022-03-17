@@ -1,0 +1,14 @@
+{
+    "/api": {
+        "target": "http://contracts.ezycheckins.com/",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    },
+    "/socket.io": {
+        "target": "http://contracts.ezycheckins.com/",
+        "ws": true
+    }
+}

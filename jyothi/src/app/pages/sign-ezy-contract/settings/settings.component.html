@@ -1,0 +1,305 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="menutabs mt-4 pr-0" orientation="vertical">
+
+                <li ngbNavItem="1">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2 " (click)="optionSelection('company')"
+                            [ngClass]="selectedOption == 'company'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Company</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <div class="d-flex align-items-center mb-3">
+                                    <h5 class="mb-0"><b>Company Settings</b></h5>
+                                    <button *ngIf="userType === 'administrator'" (click)="addCompany(company, 'add', null)" placement="top"
+                                        ngbTooltip="Add Company" class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+
+                                <div class="table-responsive mt-2">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th> Name</th>
+                                                <th> Code</th>
+                                                <th> State</th>
+                                                <th> Address</th>
+                                                <th> City</th>
+                                                <th> Pincode</th>
+
+
+
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of companies; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.company_name}}</td>
+                                                <td>{{item?.company_code}}</td>
+                                                <td>{{item?.company_state}}</td>
+                                                <td>{{item?.company_address}}</td>
+                                                <td>{{item?.company_city}}</td>
+                                                <td>{{item?.company_pincode}}</td>
+                                                <td>
+                                                    <div class="custom-control custom-switch">
+                                                        <input [checked]="item.status == 'Active' "
+                                                            (input)="changeStatus(item, 'companies')" type="checkbox"
+                                                            class="custom-control-input" id="switch1{{i}}">
+                                                        <label class="custom-control-label" for="switch1{{i}}"></label>
+                                                    </div>
+
+                                                </td>
+                                                <td><i (click)="addCompany(company, 'edit', item)" placement="top"
+                                                        ngbTooltip="Edit" class="ri-pencil-line"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+                <li ngbNavItem="2" *ngIf="userType !== 'administrator'">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2 " (click)="optionSelection('notification')"
+                            [ngClass]="selectedOption == 'notification'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Notifications</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <form #notificationForm="ngForm" (ngSubmit)="notificationSubmit(notificationForm)">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-3"><b>Notification Settings</b></h5>
+
+                                <div class="row">
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="notification">Notification</label>{{notificationData?.notificaton}}
+                                            <ng-select required #notification="ngModel" id="notification"
+                                                [(ngModel)]="notificationData.notification" placeholder="Select Notification"
+                                                name="notification">
+                                                <ng-option value="Yes">Yes</ng-option>
+                                                <ng-option value="No">No</ng-option>
+                                            </ng-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6" *ngIf="notificationData.notification === 'Yes'">
+                                        <div class="form-group">
+                                            <label for="notify_before">Send notification before</label>
+                                            <input min="1" max="10" required #notify_before="ngModel" id="notify_before"
+                                                [(ngModel)]="notificationData.notify_before" class="form-control"
+                                                type="number" name="notify_before">
+                                                <small class="text-danger" *ngIf="!notify_before.valid && notificationData.notify_before">Max Days 10</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-6" *ngIf="formData.notification === 'Yes'">
+                                        <div class="form-group">
+                                            <label for="my-input"> Select Notification Group</label>
+                                            <ng-select [multiple]="true" required #select_notification_group="ngModel"
+                                                id="select_notification_group"
+                                                [(ngModel)]="formData.select_notification_group"
+                                                placeholder="Select Notification Group" name="select_notification_group"
+                                                [searchable]=true>
+                                                <ng-option *ngFor="let item of usersData" [value]="item.name">
+                                                    {{item.name}}</ng-option>
+
+
+
+
+                                            </ng-select>
+                                        </div>
+                                    </div> -->
+
+
+                                    
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="text-right">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </ng-template>
+                </li>
+
+
+                <li ngbNavItem="3" *ngIf="userType !== 'administrator'">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2 " (click)="optionSelection('general')"
+                            [ngClass]="selectedOption == 'general'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>General Settings</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <form #notificationForm="ngForm" (ngSubmit)="notificationSubmit(notificationForm)">
+                        <div class="card mb-3 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-3"><b>General Settings</b></h5>
+
+                                <div class="row">
+
+
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="logout">Logout Time(minutes)</label>
+                                            <input  required #logout="ngModel" id="logout"
+                                                [(ngModel)]="notificationData.logout" class="form-control"
+                                                type="number" name="logout">
+                                        </div>
+                                    </div>
+
+                                  
+
+
+                                    
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="text-right">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </ng-template>
+                </li>
+
+
+
+              
+
+
+
+
+
+
+
+
+            </ul>
+
+        </div>
+        <div class="col-md-9 pl-0">
+            <div [ngbNavOutlet]="nav" class="mt-4"></div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #company let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachCompany ? 'Update' : 'Add'}} Company</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form #companyForm="ngForm" (ngSubmit)="companySubmit(companyForm)">
+        <div class="modal-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_name">Company Name</label>
+                        <input required #company_name="ngModel" [(ngModel)]="companyFormData.company_name"
+                            id="company_name" class="form-control" type="text" name="company_name">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_code">Company Code</label>
+                        <input required #company_code="ngModel" [(ngModel)]="companyFormData.company_code"
+                            id="company_code" class="form-control" type="text" name="company_code">
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="company_pincode">Pincode</label>
+                        <input class="form-control" type="text" placeholder="Enter Pincode" id="company_pincode"
+                            name="company_pincode" [(ngModel)]="companyFormData.company_pincode"
+                            #company_pincode="ngModel" (ngModelChange)="getPincodeData($event)" maxlength="6"
+                            minlength="6" required>
+                        <small class="text-danger" *ngIf="!zip_code_valid && company_pincode.invalid && companyFormData.company_pincode?.length">Enter Valid
+                            Pincode</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_state">State</label>
+                        <input required #company_state="ngModel" [(ngModel)]="companyFormData.company_state"
+                            id="company_state" class="form-control" type="text" name="company_state">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_city">City</label>
+                        <ng-select required name="company_city" [items]="states" bindLabel="Name" bindValue="Name" [(ngModel)]="companyFormData.company_city">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="company_address">Address</label>
+                         <input class="form-control" name="company_address"  required #company_address="ngModel" [(ngModel)]="companyFormData.company_address"
+                         id="company_address" >
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close(companyForm.reset)">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachCompany ? 'Update' : 'Add'}}</button>
+        </div>
+    </form>
+</ng-template>

@@ -1,0 +1,181 @@
+<section class="my-4">
+    <div class="container-fluid px-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="row mb-3 px-4 pt-3">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center">
+                            <h5 class="m-0"><b>Contracts</b></h5>
+                            <button (click)="addContract()" placement="top" ngbTooltip="Add Contract"
+                                class="btn btn-primary ml-3 shadow" type="button"><i class="ri-add-line"></i></button>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group m-0 flex-fill">
+                                <ng-select [multiple]="false" (ngModelChange)="onFilterChange.emit($event)"
+                                    [(ngModel)]="search.vendor" placeholder="All Vendors" name="Vendors" [searchable]=true>
+                                    <ng-option value="">All Vendors</ng-option>
+                                    <ng-option *ngFor="let item of vendorsData" [value]="item.name">
+                                        {{item.vendor_name}}</ng-option>
+
+
+
+
+                                </ng-select>
+                            </div>
+                            <div class="form-group m-0 flex-fill ml-2">
+                                <ng-select [multiple]="false" (ngModelChange)="onFilterChange.emit($event)"
+                                    [(ngModel)]="search.department" placeholder="All Departments" name="Vendors"
+                                    [searchable]=true>
+                                    <ng-option value="">All Departments</ng-option>
+                                    <ng-option *ngFor="let item of departments" [value]="item.name">
+                                        {{item.name}}</ng-option>
+
+
+
+
+                                </ng-select>
+                            </div>
+                            <!-- <div class="form-group m-0 flex-fill ml-2">
+                                <input type="date" class="form-control">
+                            </div> -->
+                            <div class="flex-fill ml-2">
+                                <input [(ngModel)]="query" type="search" class="form-control" placeholder="Search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="">
+                            <div class="p-0">
+
+
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">#</th>
+                                                <th>Contract Name</th>
+                                                <th>Vendor</th>
+                                                <th>Department</th>
+
+                                                <th>Contract Type</th>
+
+                                                <th>Start Date</th>
+                                                <th>End Date</th>
+
+
+
+                                                <th>Contact</th>
+
+
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let item of contracts | searchFilter:query | paginate: config; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{item?.contract_name}} </td>
+                                                <td>
+                                                    {{item?.select_vendor}}
+                                                </td>
+                                                <td>
+                                                    {{item?.select_department}}
+                                                </td>
+
+                                                <td>
+                                                    {{item?.contract_type}}
+                                                </td>
+
+                                                <td>
+                                                    {{item?.start_date}}
+                                                </td>
+                                                <td>
+                                                    {{item?.end_date}}
+                                                </td>
+                                                <td>
+                                                    {{item?.select_contact}}
+                                                </td>
+
+
+                                                <td>
+                                                 
+                                                    <i (click)="activityLog(item)" placement="top" ngbTooltip="Activity Log"
+                                                    class="ri-history-line"></i>
+
+                                                    <i (click)="view(item)" placement="top" ngbTooltip="View"
+                                                        class="ri-eye-line ml-3"></i>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row px-4 pt-4">
+                    <div class="col-md-6">
+                        <small class="m-0"><b>20 Records Per Page</b></small>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+
+
+
+<div class="activity" *ngIf="activity">
+    <div class="bg-light p-2 ">
+        <h5 class="m-0">
+
+            <i (click)="closeLog()" class="ri-arrow-left-line"></i> <b> Activity Log</b>
+        </h5>
+    </div>
+    <div class="activity-feed">
+        <div class="feed-item" *ngFor="let item of activityLogs;let index=index">
+            <ng-container>
+                <div class="text">
+                    <strong> {{item.modified_by}}</strong>
+                    <small class="float-right">{{item.creation | date : 'short'}}</small> <br/>
+                    <ng-template [ngIf]="item.data?.created_by">
+                        Created
+                        <!-- created by -->
+                    </ng-template>
+                    <ng-template [ngIf]="item.data?.changed && item.data?.changed.length">Changed value of {{(item.data.changed[0][0] |uppercase) || '" "'}} from
+                        <small>{{item.data.changed[0][1] || '" "' }}</small> to
+                        <small>{{item.data.changed[0][2]|| '" "'}} </small>
+                    </ng-template>
+                    <ng-template [ngIf]="item.data?.added && item.data?.added.length">
+                        added {{item.data.added[0][0] || '" "' }} <br>
+                        <small>{{item.data.added[0][1]?.image1 || '" "' }}</small>,
+                        <small>{{item.data.added[0][1]?.image2 || '" "' }}</small>
+                    </ng-template>
+                    <ng-template [ngIf]="item.data?.removed && item.data?.removed.length">
+                        removed list
+                    </ng-template>
+                </div>
+
+
+            </ng-container>
+        </div>
+
+    </div>
+</div>

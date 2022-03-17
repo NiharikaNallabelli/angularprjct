@@ -1,0 +1,38 @@
+.signlogo {
+    height: 34px;
+    max-width: 75%;
+}
+
+li {
+    list-style-type: none;
+    // font-size: 13px;
+    text-align: center;
+    padding: 13px;
+    &.active {
+        background-color: #f2f0e4;
+        // font-weight: bold;
+    }
+}
+
+.p-st {
+    position: sticky;
+    top: 0px;
+    z-index: 9;
+}
+
+.notification{
+    i{
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .bg-tr{background: transparent;}
+}
+
+.dropdown-toggle::after {
+   border: 0 !important;
+}
+.badge{font-weight: normal !important;position: relative;top: -9px;}
+.w-100{width: 300px !important;}
+.logoutbtn{border: 1px solid #eee;font-size: 12px;padding: 2px 20px;display: block;}
+.br-50{border-radius: 50%;}

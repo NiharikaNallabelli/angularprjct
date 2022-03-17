@@ -1,0 +1,256 @@
+<section class="my-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+
+                        <div class="row pt-3 px-4">
+                            <div class="col-md-7">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h5 class="m-0"><b>Users</b></h5>
+                                    <button (click)="addUser(user, 'add', null)" placement="top" ngbTooltip="Add User"
+                                        class="btn btn-primary ml-3 shadow" type="button"><i
+                                            class="ri-add-line"></i></button>
+
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="d-flex">
+                                    <div class="flex-fill">
+                                        <select (ngModelChange)="onFilterChange.emit($event)"
+                                            [(ngModel)]="search.vendor" class="form-control" name="vendor">
+                                            <option value="">All Departments</option>
+                                            <option [value]="item?.name" *ngFor="let item of departments">
+                                                {{item?.department_name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex-fill ml-3">
+                                        <input [(ngModel)]="query" type="search" class="form-control"
+                                            placeholder="Search">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-2">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">S.No</th>
+                                        <th>Email</th>
+                                        <!-- <th>User Name</th> -->
+                                        <th>Department</th>
+
+                                        <th>Company Code</th>
+
+
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of users | searchFilter : query | paginate: config;; let i=index">
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td>
+                                            {{item?.email}}
+                                        </td>
+
+                                        <!-- <td>{{item?.username}}</td> -->
+                                        <td>
+                                            {{item?.department}}
+                                        </td>
+
+                                        <td>
+                                            {{item?.company_code}}
+                                        </td>
+
+
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input [checked]="item.enabled != 0 "
+                                                    (input)="changeStatus(item)" type="checkbox"
+                                                    class="custom-control-input" id="switch1{{i}}">
+                                                <label class="custom-control-label" for="switch1{{i}}"></label>
+                                            </div>
+
+                                        </td>
+
+                                        <td>
+                                            <i (click)="addUser(user, 'edit', item)" placement="top" ngbTooltip="Edit"
+                                                class="ri-pencil-line"></i>
+
+                                            <i (click)="changePassword(password, item)" placement="top"
+                                                ngbTooltip="Change Password" class="ri-lock-line ml-3"></i>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="row px-4">
+                            <div class="col-md-6">
+                                <small class="m-0"><b>20 Records Per Page</b></small>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #user let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">{{eachUser ? 'Update' : 'Add'}} User</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+        <div class="modal-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input required #first_name="ngModel" [(ngModel)]="formData.first_name" id="first_name"
+                            class="form-control" type="text" name="first_name">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input required #last_name="ngModel" [(ngModel)]="formData.last_name" id="last_name"
+                            class="form-control" type="text" name="last_name">
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input [disabled]="eachUser?.email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required #email="ngModel"
+                            [(ngModel)]="formData.email" id="email" class="form-control" type="text" name="email">
+                        <small *ngIf="email.dirty && email.invalid">Invalid Email</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6" *ngIf="!eachUser">
+                    <div class="form-group">
+                        <label for="new_password">Password</label>
+                        <input pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"
+                            [(ngModel)]="formData.new_password" #new_password="ngModel" placeholder="Password"
+                            id="new_password" class="form-control" type="password" name="new_password" required>
+                        <small class="text-danger" *ngIf="new_password?.errors?.pattern">(should contain special
+                            characters and alphanumeric)</small>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="roles">Roles</label>
+                        <ng-select [multiple]=true name="roles"  required #roles="ngModel"
+                            [items]="rolesData" bindLabel="role" [(ngModel)]="formData.roles">
+                        </ng-select>
+                        <!-- <select required #roles="ngModel" [(ngModel)]="formData.roles" class="form-control"
+                            name="roles">
+                            <option [ngValue]="undefined">Please Select Role</option>
+                            <option [value]="item?.name" *ngFor="let item of rolesData">{{item?.role_name}}</option>
+                        </select> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select required #department="ngModel" [(ngModel)]="formData.department" class="form-control"
+                            name="department">
+                            <option [ngValue]="undefined">Please Select Department</option>
+                            <option [value]="item?.name" *ngFor="let item of departments">{{item?.department_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6"> 
+                    <div class="form-group">
+                        <label for="company_code">Company Code</label>
+                        <ng-select [disabled]="eachUser?.company_code" required placeholder="Select Company Code" name="company_code" [items]="companies"
+                            bindLabel="company_code" bindValue="name" [(ngModel)]="formData.company_code">
+                        </ng-select>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+            <button type="submit" class="btn btn-primary">{{eachUser ? 'Update' : 'Add'}}</button>
+
+        </div>
+
+    </form>
+</ng-template>
+
+
+<ng-template #password let-modal>
+    <div class="modal-header border-0">
+        <h6 id="modal-basic-title"><strong>Change Password</strong></h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form #form="ngForm">
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+
+                <input [(ngModel)]="new_password" appMatInput id="newPassword" class="form-control" type="password"
+                    name="new_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$"
+                    required>
+                <small class="text-mute">should contain special characters and alphanumeric </small><br>
+                <small class="text-danger" *ngIf="form.submitted && new_password?.errors?.required ">Required</small>
+                <small class="text-danger" *ngIf="form.submitted && new_password.errors.pattern">Check password
+                    pattern</small>
+            </div>
+            <!-- <h6>Do you want to change password?</h6> -->
+        </form>
+    </div>
+    <div class="modal-footer border-0 d-block text-center pb-4">
+        <button type="reset" class="btn btn-outline-dark" (click)="modal.close(form.reset())">Cancel</button>
+        <button type="button" (click)="changePasswordSave()" class="btn btn-primary">Confirm</button>
+    </div>
+
+</ng-template>

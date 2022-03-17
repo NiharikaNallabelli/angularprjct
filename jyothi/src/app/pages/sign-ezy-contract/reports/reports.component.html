@@ -1,0 +1,294 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="menutabs mt-4 pr-0" orientation="vertical">
+
+                <li ngbNavItem="1">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2 " (click)="optionSelection('company')"
+                            [ngClass]="selectedOption == 'company'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Department Statistics</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="m-0"><b>Department Statistics</b></h5>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="d-flex justify-content-between">
+
+                                                <div class="form-group m-0 flex-fill ml-2 ">
+                                                    <ng-select [multiple]="false"
+                                                        (ngModelChange)="onFilterChange.emit($event)"
+                                                        [(ngModel)]="search.department" placeholder="Departments"
+                                                        name="Vendors" [searchable]=true>
+                                                        <ng-option value="">All Departments</ng-option>
+                                                        <ng-option *ngFor="let item of departments" [value]="item.name">
+                                                            {{item.name}}</ng-option>
+
+
+
+
+                                                    </ng-select>
+                                                </div>
+                                                <div class="form-group m-0 flex-fill ml-2 calendarNew">
+                                                    <span (click)="clear()" *ngIf="search.filterDate?.length"><span
+                                                        class="clo ri-close-circle-line"></span></span>
+                                                    <input class="form-control h-auto" [(ngModel)]="search.filterDate"
+                                                    (dateTimeChange)="onFilterChange.emit($event)" [owlDateTime]="dt1"
+                                                    [selectMode]="'range'" [owlDateTimeTrigger]="dt1" placeholder="Date">
+                                                <span *ngIf="!search.filterDate?.length" class="example-trigger" [owlDateTimeTrigger]="dt1">
+                                                    <i class="ri-calendar-2-line"></i>
+                                                </span>
+                                                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                                                </div>
+                                                <div class="flex-fill ml-2">
+                                                    <input [(ngModel)]="query" type="search" class="form-control"
+                                                        placeholder="Search">
+                                                </div>
+                                                <div class="ml-2">
+                                                    <button  [disabled]="!contracts?.length" (click)="exportAsXLSX()" class="btn btn-primary" type="button">Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="">
+                                                <div class="p-0">
+
+
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-sm m-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center">#</th>
+                                                                    <th>Department</th>
+                                                                    <th>Total Contracts</th>
+                                                                    <th>Total Amount</th>
+
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr
+                                                                    *ngFor="let item of contracts  | searchFilter:query | paginate: config; let i=index">
+                                                                    <td>{{i+1}}</td>
+                                                                    <td>{{item?.select_department || 0}} </td>
+                                                                    <td>
+                                                                        {{item?.total_counts || 0}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item?.total_amount || 0}}
+                                                                    </td>
+
+
+
+
+
+                                                                </tr>
+
+
+                                                                <tr class="total">
+                                                                    <td  colspan="2"><strong>Total</strong></td>
+                                                                    <td class="bg-light"><strong>{{totalContracts || 0}}</strong></td>
+                                                                    <td class="bg-light"><strong>{{totalAmount || 0}}</strong></td>
+                                                                </tr>
+                                                                
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-4 pt-2">
+                                        <div class="col-md-6">
+                                            <small class="m-0"><b>20 Records Per Page</b></small>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <pagination-controls (pageChange)="pageChanged($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+                <li ngbNavItem="2">
+                    <a ngbNavLink class="pb-0 text-black">
+                        <div class="card mb-2 " (click)="optionSelection('notification')"
+                            [ngClass]="selectedOption == 'notification'? 'dx':''">
+                            <div class="p-3 d-flex justify-content-between ">
+                                <div>
+                                    <p class="m-0"><b>Contract Summary Report</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <div class="d-flex align-items-center">
+                                                <h5 class="m-0"><b>Contract Summary Report</b></h5>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="form-group m-0 flex-fill">
+                                                    <ng-select [multiple]="false"
+                                                        (ngModelChange)="onFilterChange.emit($event)"
+                                                        [(ngModel)]="search.contract_name" placeholder="Contracts" name="contract_name"
+                                                        [searchable]=true>
+                                                        <ng-option value="">All Contracts</ng-option>
+                                                        <ng-option *ngFor="let item of contractsData" [value]="item.name">
+                                                            {{item.contract_name}}</ng-option>
+
+
+
+
+                                                    </ng-select>
+                                                </div>
+
+                                                <!-- <div class="form-group m-0 flex-fill ml-2">
+                                                 <input type="date" class="form-control">
+                                             </div> -->
+                                                <div class="flex-fill ml-2">
+                                                    <input [(ngModel)]="query" type="search" class="form-control"
+                                                        placeholder="Search">
+                                                </div>
+
+                                                <div class="ml-2">
+                                                    <button [disabled]="!contracts?.length" (click)="exportAsXLSX()" class="btn btn-primary" type="button">Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="">
+                                                <div class="p-0">
+
+
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="text-center">#</th>
+                                                                    <th>Contract</th>
+                                                                    <th>Total Invoices</th>
+                                                                    <th>Total Amount</th>
+                                                                    <th>Contract Status</th>
+
+                                                                    <th>Expires on</th>
+
+
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr
+                                                                    *ngFor="let item of contracts | searchFilter:query | paginate: config; let i=index">
+                                                                    <td>{{i+1}}</td>
+                                                                    <td>{{item?.contract_name || 0}} </td>
+                                                                    <td>
+                                                                        {{item?.total_invoices || 0}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item?.total_amount || 0}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <i [ngClass]="{'text-success': item?.expireStatus <= 0, 'text-danger': item?.expireStatus > 0}" class="ri-checkbox-blank-circle-fill mr-1"></i> {{item?.expireStatus > 0 ? 'Active' :  'Expired'  }}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{item?.end_date}}
+                                                                    </td>
+
+
+
+
+
+                                                                </tr>
+
+                                                                <tr class="total" *ngIf="contracts?.length">
+                                                                    <td  colspan="2"><strong>Total</strong></td>
+                                                                    <td class="bg-light"><strong>{{total_invoices || 0}}</strong></td>
+                                                                    <td class="bg-light"><strong>{{total_amount || 0}}</strong></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-4 pt-4">
+                                        <div class="col-md-6">
+                                            <small class="m-0"><b>20 Records Per Page</b></small>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <pagination-controls (pageChange)="pageChanged($event)">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </ul>
+
+        </div>
+        <div class="col-md-9 pl-0">
+            <div [ngbNavOutlet]="nav" class="mt-4"></div>
+        </div>
+    </div>
+</div>

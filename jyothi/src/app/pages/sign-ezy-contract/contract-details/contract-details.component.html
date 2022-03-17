@@ -1,0 +1,563 @@
+<section class="my-3 px-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="side-card bg-white shadow-sm">
+                    <div class="bg-light p-3">
+                        <div class="back-icon mb-2">
+                            <i [routerLink]="[ '/ezy-contracts/contracts']"
+                                class="ri-arrow-left-line cursor-pointer"></i>
+                        </div>
+                        <div class="tags mb-2">
+                            <span>{{contractData?.select_department}}</span>
+                            <span>{{contractData?.contract_type}}</span>
+                        </div>
+                        <div>
+                            <div>
+                                <h6><strong>{{contractData?.contract_name}}</strong></h6>
+                                <div class="tags">
+                                    {{contractData?.tags}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="">
+                            <ul class="p-0">
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <small>Start Date</small>
+                                        <p><strong>{{contractData?.start_date}}</strong></p>
+                                    </div>
+                                    <div>
+                                        <small>End Date</small>
+                                        <p><strong>{{contractData?.end_date}}</strong></p>
+                                    </div>
+                                </li>
+                                <!-- <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Notifications</p>
+                                    </div>
+                                    <div>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="switch1" checked="">
+                                            <label class="custom-control-label" for="switch1"></label>
+                                        </div>
+                                    </div>
+                                </li> -->
+
+                                <!-- <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Send Notifications</p>
+                                    </div>
+                                    <div>
+                                        <select name="" id="" class="border-0">
+                                            <option value=""> Before 6 days</option>
+                                            <option value=""> Before 3 days</option>
+                                        </select>
+                                    </div>
+                                </li> -->
+
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Contact Number</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.contact_number}}</strong></p>
+                                    </div>
+                                </li>
+
+
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Email Id</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.contact_email_id}}</strong></p>
+                                    </div>
+                                </li>
+
+
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Vendor Name</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.select_vendor}}</strong></p>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Vendor Email</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.vendor_email_id}}</strong></p>
+                                    </div>
+                                </li>
+
+                                <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Vendor Contact</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.vendor_contact_number}}</strong></p>
+                                    </div>
+                                </li>
+
+                                 <li class="d-flex justify-content-between">
+                                    <div>
+                                        <p>Payment Cycle</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>{{contractData?.payment_cycle}}</strong></p>
+                                    </div>
+                                </li>
+
+
+                            </ul>
+
+                            <div class="text-center pb-3">
+                                <button (click)="sendEmail(emailSend)" class="btn btn-primary shadow" type="button"><i
+                                        class="ri-send-plane-fill"></i>
+                                    Send Email</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="row mb-3">
+                    <div class="col-md-9">
+                        <h5><strong>Attachments</strong></h5>
+                    </div>
+                    <div class="col-md-3">
+                        <select [(ngModel)]="attachmentsType" id="my-select" class="form-control" name="">
+                            <option value="All">All Attachments</option>
+                            <option value="invoice">Invoices</option>
+                            <option value="agreements">Agreements</option>
+                            <option value="supported">Supported Documents</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div dragula="DRAGULA_FACTS" class="card  shadow-sm"  [ngClass]="{'d-none': attachmentsType != 'agreements' , 'd-block': attachmentsType == 'All'}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between drag">
+                                    <div>
+                                        <h6><strong>Agreements</strong></h6>
+                                    </div>
+
+                                    <div>
+                                        <i class="ri-keyboard-line"></i>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="d-block cursor-pointer" for="Agreements">
+                                            <input multiple (change)="fileUpload($event, 'Agreements')" class="d-none"
+                                                id="Agreements" type="file" />
+                                            <div class="upload d-flex justify-content-center align-items-center">
+                                                <i class="ri-add-fill"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-3" *ngFor="let item of agreements; let i=index">
+
+                                        <div class="pdfs">
+                                            <div class="features">
+                                                <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                <small>{{item?.creation | date:'short'}}</small>
+
+                                                <div class="view-icons">
+                                                    <i (click)="downloadDoc(item.agreement, item?.agreement)" class="ri-download-2-line"></i>
+                                                    <i (click)="sendMail(item,sendMailContent)"
+                                                        class="ri-mail-line"></i>
+                                                    <i [routerLink]="[ '/ezy-contracts/view-all' ]"
+                                                        [queryParams]="{id: item.parent, name: item.name}"
+                                                        class="ri-eye-line"></i>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="bg-light p-20  d-flex justify-content-center align-items-center">
+                                                <i class="ri-file-text-line"></i>
+                                            </div>
+                                            <div class="d-flex align-items-center p-2 file">
+                                                <div class="">
+                                                    <i class="ri-file-text-line"></i>
+                                                </div>
+                                                <div class="ml-2">
+                                                    <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                    <small>{{item?.creation | date:'short'}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div dragula="DRAGULA_FACTS" class="card  shadow-sm" [ngClass]="{'d-none': attachmentsType != 'invoice', 'd-block': attachmentsType == 'All'}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between drag">
+                                    <div>
+                                        <h6><strong>Invoices</strong></h6>
+                                    </div>
+
+                                    <div>
+                                        <i class="ri-keyboard-line"></i>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="d-block cursor-pointer" for="Invoices">
+                                            <input multiple (change)="fileUpload($event, 'Invoices')" class="d-none"
+                                                id="Invoices" type="file" />
+                                            <div class="upload d-flex justify-content-center align-items-center">
+                                                <i class="ri-add-fill"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+
+                                    <div class="col-md-3" *ngFor="let item of invoices; let i=index">
+
+                                        <div class="pdfs">
+                                            <div class="features">
+                                                <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                <small>{{item?.creation | date:'short'}}</small>
+
+                                                <div class="view-icons">
+                                                    <i (click)="downloadDoc(item.agreement, item?.agreement)" class="ri-download-2-line"></i>
+                                                    <i (click)="sendMail(item,sendMailContent)"
+                                                        class="ri-mail-line"></i>
+                                                    <i [routerLink]="[ '/ezy-contracts/view-all' ]"
+                                                        [queryParams]="{id: item.parent, name: item.name}"
+                                                        class="ri-eye-line"></i>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="bg-light p-20  d-flex justify-content-center align-items-center">
+                                                <i class="ri-file-text-line"></i>
+                                            </div>
+                                            <div class="d-flex align-items-center p-2 file">
+                                                <div class="">
+                                                    <i class="ri-file-text-line"></i>
+                                                </div>
+                                                <div class="ml-2">
+                                                    <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                    <small>{{item?.creation | date:'short'}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div dragula="DRAGULA_FACTS" class="card  shadow-sm" [ngClass]="{'d-none': attachmentsType != 'supported', 'd-block': attachmentsType == 'All'}">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between drag">
+                                    <div>
+                                        <h6><strong>Support Documents</strong></h6>
+                                    </div>
+
+                                    <div>
+                                        <i class="ri-keyboard-line"></i>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="d-block cursor-pointer" for="SupportedDocuments">
+                                            <input multiple (change)="fileUpload($event, 'Supported Documents')"
+                                                class="d-none" id="SupportedDocuments" type="file" />
+                                            <div class="upload d-flex justify-content-center align-items-center">
+                                                <i class="ri-add-fill"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+
+
+                                    <div class="col-md-3" *ngFor="let item of supportedDocuments; let i=index">
+
+                                        <div class="pdfs">
+                                            <div class="features">
+                                                <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                <small>{{item?.creation | date:'short'}}</small>
+
+                                                <div class="view-icons">
+                                                    <i (click)="downloadDoc(item.agreement, item?.agreement)" class="ri-download-2-line"></i>
+                                                    <i (click)="sendMail(item,sendMailContent)"
+                                                        class="ri-mail-line"></i>
+                                                    <i [routerLink]="[ '/ezy-contracts/view-all' ]"
+                                                        [queryParams]="{id: item.parent, name: item.name}"
+                                                        class="ri-eye-line"></i>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="bg-light p-20  d-flex justify-content-center align-items-center">
+                                                <i class="ri-file-text-line"></i>
+                                            </div>
+                                            <div class="d-flex align-items-center p-2 file">
+                                                <div class="">
+                                                    <i class="ri-file-text-line"></i>
+                                                </div>
+                                                <div class="ml-2">
+                                                    <p class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></p>
+                                                    <small>{{item?.creation | date:'short'}}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div placement="top" ngbTooltip="Download All" class="download-all shadow">
+        <i (click)="download(this.contractData.agreement)" class="ri-arrow-down-line"></i>
+    </div>
+</section>
+
+
+
+<ng-template #emailSend let-modal>
+
+
+    <div class="d-flex align-items-center px-4 pt-3 steppeer">
+        <div class="d-flex  align-items-center">
+            <div class="number" [ngClass]="{'active': step1 || step2}">1</div>
+            <div>
+                <h6 class="m-0" [ngClass]="{'active': step1 || step2}"><strong>Select Attachments</strong></h6>
+            </div>
+        </div>
+        <div>
+            <div class="border-c"></div>
+        </div>
+        <div class="d-flex  align-items-center">
+            <div class="number" [ngClass]="{'active': step2}">2</div>
+            <div>
+                <h6 class="m-0" [ngClass]="{'active': step2}"><strong>Email content</strong></h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body p-4 sendMail">
+
+
+        <div [hidden]="!step1">
+            <form action="">
+                <div class="my-3" *ngIf="invoices?.length">
+                    <h6><strong>Invoices</strong></h6>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let item of invoices; let i=index">
+                        <div class="card p-2 px-3">
+                            <div class="d-flex align-items-center">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="invoices-{{i}}" required
+                                        (click)="setCheckbox($event, item)" />
+
+                                    <label class="custom-control-label" for="invoices-{{i}}"></label>
+                                </div>
+                                <div [title]="item?.agreement | slice : 7" class="d-flex align-items-center files ml-2">
+                                    <div class="mr-1">
+                                        <i class="ri-file-text-line"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0"><strong>{{item?.agreement | slice : 7}}</strong></h6>
+                                        <small>{{item?.creation | date:'short'}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="my-3" *ngIf="supportedDocuments?.length">
+                    <h6><strong>Supported Documents</strong></h6>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let item of supportedDocuments; let i=index">
+                        <div class="card p-2 px-3">
+                            <div [title]="item?.agreement | slice : 7" class="d-flex align-items-center">
+                                <div class="custom-control custom-checkbox">
+                                    <input class="custom-control-input" type="checkbox" id="supported-{{i}}" required
+                                        (click)="setCheckbox($event, item)" />
+
+                                    <label class="custom-control-label" for="supported-{{i}}"></label>
+                                </div>
+                                <div class="d-flex align-items-center files ml-2">
+                                    <div class="mr-1">
+                                        <i class="ri-file-text-line"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0"><strong>{{item.agreement | slice : 7}}</strong></h6>
+                                        <small>{{item?.creation | date:'short'}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div class="my-3" *ngIf="agreements?.length">
+                    <h6><strong>Agreements</strong></h6>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let item of agreements; let i=index">
+                        <div class="card p-2 px-3">
+                            <div class="d-flex align-items-center">
+                                <div [title]="item?.agreement | slice : 7" class="custom-control custom-checkbox">
+
+
+                                    <input class="custom-control-input" type="checkbox" id="agreements-{{i}}" required
+                                        (click)="setCheckbox($event, item)" />
+
+                                    <label class="custom-control-label" for="agreements-{{i}}"></label>
+                                </div>
+                                <div class="d-flex align-items-center files ml-2">
+                                    <div class="mr-1">
+                                        <i class="ri-file-text-line"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="m-0"><strong>{{item.agreement | slice : 7}}</strong></h6>
+                                        <small>{{item?.creation | date:'short'}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </form>
+
+            <div class="text-right mt-3">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+                <button (click)="next()" type="button"
+                    class="btn btn-primary ml-3">Next({{selectedAttachments?.length}})</button>
+            </div>
+
+        </div>
+
+        <div [hidden]="!step2">
+            <form>
+
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input required [(ngModel)]="mailInfo.subject" id="subject" class="form-control" type="text"
+                        name="subject">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea required [(ngModel)]="mailInfo.message" rows="3" id="message" class="form-control"
+                        type="text" name="message"></textarea>
+                </div>
+
+            </form>
+
+            <div class="text-right mt-3">
+                <button type="button" class="btn btn-outline-dark" (click)="prev()">Prev</button>
+                <button (click)="mailSend()" type="button" class="btn btn-primary ml-3">Save</button>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+
+
+<ng-template #sendMailContent let-modal>
+
+
+
+    <div class="modal-body p-4 sendMail">
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <h5 class="mb-3">Send Email</h5>
+
+        </div>
+        <div>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+    </div>
+
+        <form>
+
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input required [(ngModel)]="mailInfoIndividual.subject" id="subject" class="form-control" type="text"
+                    name="subject">
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea required [(ngModel)]="mailInfoIndividual.message" rows="3" id="message" class="form-control" type="text"
+                    name="message"></textarea>
+            </div>
+
+        </form>
+
+        <div class="text-right mt-3">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss()">Cancel</button>
+            <button (click)="mailSent()" type="button" class="btn btn-primary ml-3">Save</button>
+        </div>
+    </div>
+
+</ng-template>

@@ -1,0 +1,64 @@
+.hotel_name h6 {
+    border: 1px solid #e2e2e2;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 13px;
+}
+.card {
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.05);
+    border: 0;
+    border-radius: 4px;
+}
+
+.dashboard .card:hover {
+    transform: scale(1.1, 1.1);
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.dashboard {
+    background: linear-gradient(90.12deg, #ec063b 0.1%, #4a569d 125.63%);
+    height: 130px;
+
+    .card-text {
+        font-weight: normal;
+        font-size: 13px;
+    }
+
+    .bg-1 {
+        border-left: 4px solid #0b12c8;
+    }
+    .bg-2 {
+        border-left: 4px solid #f38738;
+    }
+    .bg-3 {
+        border-left: 4px solid #d56819;
+    }
+    .bg-4 {
+        border-left: 4px solid #00e677;
+    }
+    .bg-5 {
+        border-left: 4px solid #03a74f;
+    }
+    .bg-6 {
+        border-left: 4px solid #ec063b;
+    }
+}
+
+.contracts {
+    margin-top: 58px;
+}
+
+.progress {
+    border-radius: 6px;
+}
+
+.contracts p {
+    font-size: 15px;
+    margin-bottom: 10px !important;
+}
+.icons-settings i {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 20px;
+}

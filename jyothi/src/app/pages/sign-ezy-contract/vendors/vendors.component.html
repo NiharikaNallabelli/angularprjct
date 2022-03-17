@@ -1,0 +1,121 @@
+<section class="my-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+
+                        <div  class="d-flex align-items-center px-4 pt-3 mb-3">
+                            <h5 class="m-0"><b>Vendors</b></h5>
+                            <button *ngIf="user != 'administrator'" (click)="addVendor('add', null)" placement="top"
+                            ngbTooltip="Add Vendor" class="btn btn-primary ml-3 shadow" type="button"><i
+                                class="ri-add-line"></i></button>
+
+                           </div>
+
+                        <div class="table-responsive mt-2">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Vendor Name</th>
+
+                                        <th>Address</th>
+
+                                        <th>Contact Number</th>
+                                        <th>Email</th>
+
+                                        <th *ngIf="user != 'administrator'" >Status</th>
+                                        <th *ngIf="user != 'administrator'" >Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr *ngFor="let item of vendorsData | paginate: config; let i=index">
+                                        <td class="text-center">{{i+1}}</td>
+                                        <td>{{item?.vendor_name}}</td>
+                                        <td>
+                                            {{item?.address}}
+                                        </td>
+                                        <td>
+                                            {{item?.vendor_contact_number}}
+                                        </td>
+
+                                        <td>
+                                            {{item?.vendor_email}}
+                                        </td>
+
+                                        <td *ngIf="user != 'administrator'" >
+                                            <div class="custom-control custom-switch">
+                                                <input [checked]="item.status == 'Active'"
+                                                    (input)="changeStatus(item)" type="checkbox"
+                                                    class="custom-control-input" id="switch1{{i}}">
+                                                <label class="custom-control-label" for="switch1{{i}}"></label>
+                                            </div>
+
+                                        </td>
+                                        <td *ngIf="user != 'administrator'" ><i (click)="addVendor('edit', item)" placement="top" ngbTooltip="Edit" class="ri-pencil-line"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="row px-4">
+                                <div class="col-md-6">
+                                    <small class="m-0"><b>20 Records Per Page</b></small>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <ng-template #vendors let-modal> 
+    <div class="modal-header">
+      <h5 class="modal-title" id="modal-basic-title">{{eachVendor ? 'Update' : 'Add'}} Vendor</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <form #vendorForm="ngForm" (ngSubmit)="onSubmit(vendorForm)">
+    <div class="modal-body">
+     
+        <div class="form-group">
+            <label for="vendor_name">Vendor Name</label>
+            <input required #vendor_name="ngModel" [(ngModel)]="formData.vendor_name" id="vendor_name" class="form-control" type="text" name="vendor_name">
+        </div>
+        
+        <div class="form-group">
+            <label for="vendor_contact_number">Contact Number</label>
+            <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"  [maxLength]="10" minlength="10"  required #vendor_contact_number="ngModel" [(ngModel)]="formData.vendor_contact_number" id="vendor_contact_number" class="form-control" type="text" name="vendor_contact_number">
+        </div>
+
+        <div class="">
+            <div class="form-group">
+                <label for="vendor_email">Email</label>
+                <input    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  required #vendor_email="ngModel" [(ngModel)]="formData.vendor_email" id="vendor_email" class="form-control" type="text" name="vendor_email">
+                <small *ngIf="vendor_email.dirty && vendor_email.invalid">Invalid Email</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea required #address="ngModel" [(ngModel)]="formData.address" rows="3" id="address" class="form-control" type="text" name="address"></textarea>
+        </div>
+
+     
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+      <button type="submit" class="btn btn-primary" >{{eachVendor ? 'Update' : 'Add'}}</button>
+
+    </div>
+</form>
+  </ng-template> -->

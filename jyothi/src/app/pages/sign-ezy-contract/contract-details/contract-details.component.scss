@@ -1,0 +1,116 @@
+.upload{
+    width: 100%;
+    background: #F7F7F7;
+    border: 1px solid #E1D4D4;
+    padding: 55px;
+    border-radius: 6px;
+    i{
+        font-size: 30px;
+    }
+}
+
+.pdfs{
+    border-radius: 6px;
+    border: 1px solid #E1D4D4;
+   
+}
+
+.p-20{
+    padding: 30px;
+    i{
+        font-size: 25px;
+        opacity: 0.6;
+    }
+    
+}
+
+.tags{opacity: 0.6;font-weight: 600;}
+
+.back-icon i{font-size: 30px;}
+.card{margin-bottom: 10px;}
+.file i{font-size: 20px;  opacity: 0.6;}
+
+.file small{  opacity: 0.6;}
+.side-card ul li{border-bottom: 1px solid #F7EFEF;margin: 0;padding: 8px 10px;}
+.side-card ul li p{margin: 0;}
+
+.tags span{background: #fff;border: 1px solid #BDBABA; padding: 3px 10px;margin-right: 5px;border-radius: 10px;margin-bottom: 5px;}
+
+
+/* in-flight clone */
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    pointer-events: none;
+  }
+  /* high-performance display:none; helper */
+  .gu-hide {
+    left: -9999px !important;
+  }
+  /* added to mirrorContainer (default = body) while dragging */
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* added to the source element while its mirror is dragged */
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }
+
+  .drag i{font-size: 20px;cursor: pointer;}
+  
+.features{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  border-radius: 6px;
+  padding: 10px;
+  color: #fff;
+}
+.pdfs{position: relative;}
+.pdfs:hover  .features{
+    display: block !important;
+    cursor: pointer;
+  }
+.view-icons{margin-top: 30px;}
+  .view-icons i{border-radius: 3px; font-size: 16px;background: #fff;color: #000;padding: 5px;margin-right: 5px;}
+
+  .download-all{ width: 40px;height: 40px;background: var(--primary);text-align: center;line-height: 40px;color: #fff;border-radius: 50%;position: fixed;right: 40px;bottom: 40px;font-size: 20px;z-index: 999;cursor: pointer;}
+  .border-c{border-bottom: 2px dotted #000;width: 60px;margin: 0 10px;}
+  .number{margin-right: 8px; width: 30px;height: 30px;line-height: 30px;text-align: center;background: #949494;color: #fff;border-radius: 50%;}
+  .steppeer h6{opacity: 0.5;}
+  .steppeer h6.active{opacity: 1;}
+  .number.active{background: var(--primary);}
+  .custom-checkbox{transform: scale(1.5);}
+  .files i{font-size: 25px;}
+  .files{opacity: 0.8;}
+  .files h6{font-size: 14px;}
+.pdfs{overflow: hidden;margin-bottom: 30px;}
+  .file p{
+    width: 150px;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+  }
+
+
+  .sendMail h6 {
+    width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    strong{
+      font-weight: 500;
+    }
+}

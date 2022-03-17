@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { InjectionToken } from '@angular/core';\nexport var OWL_DATE_TIME_FORMATS = new InjectionToken('OWL_DATE_TIME_FORMATS');","map":null,"metadata":{},"sourceType":"module"}
